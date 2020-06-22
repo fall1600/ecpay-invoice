@@ -1,1 +1,1 @@
-# allpay-invoice
+# ecpay-invoice
