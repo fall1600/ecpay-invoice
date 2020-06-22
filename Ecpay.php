@@ -4,6 +4,8 @@ namespace FbBuy\Package\Ecpay\Invoice;
 
 class Ecpay
 {
+    public const VERSION = '3.0.0';
+
     /**
      * 開立-測試環境
      * @var string
@@ -18,6 +20,6 @@ class Ecpay
 
     public function issue(Info $info)
     {
-        
+
     }
 }

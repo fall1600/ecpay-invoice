@@ -9,9 +9,17 @@ abstract class Info
      */
     protected $merchantId;
 
+    /**
+     * @return array
+     */
     abstract public function getInfo();
 
-    public function __construct(string $merchantId)
+    /**
+     * Info constructor.
+     * @param  string  $merchantId
+     * @param  bool  $isPrint
+     */
+    public function __construct(string $merchantId, bool $isPrint = false)
     {
         $this->merchantId = $merchantId;
     }
