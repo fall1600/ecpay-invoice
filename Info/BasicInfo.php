@@ -1,6 +1,8 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice;
+namespace FbBuy\Package\Ecpay\Invoice\Info;
+
+use FbBuy\Package\Ecpay\Invoice\Ecpay;
 
 class BasicInfo extends Info
 {
@@ -15,5 +17,10 @@ class BasicInfo extends Info
             ],
             'Data' => [],
         ];
+    }
+
+    protected function getRequestId()
+    {
+        return time().rand();
     }
 }

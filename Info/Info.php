@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice;
+namespace FbBuy\Package\Ecpay\Invoice\Info;
 
 abstract class Info
 {

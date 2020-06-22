@@ -10,8 +10,15 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "ext-curl": "*"
+    },
     "autoload": {
-        "FbBuy\\Package\\Ecpay\\Invoice\\": ""
+        "psr-4": {
+            "FbBuy\\Package\\Ecpay\\Invoice\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
     }
 }
