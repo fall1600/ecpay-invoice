@@ -1,0 +1,17 @@
+{
+    "name": "fbbuy/ecpay-invoice",
+    "description": "ecpay invoice lib",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Harbor",
+            "email": "harborlin@17.media"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "FbBuy\\Package\\Ecpay\\Invoice\\": ""
+    }
+}
