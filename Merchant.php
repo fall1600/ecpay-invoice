@@ -4,6 +4,8 @@ namespace FbBuy\Package\Ecpay\Invoice;
 
 class Merchant
 {
+    use Cryption;
+
     /**
      * @var string
      */
