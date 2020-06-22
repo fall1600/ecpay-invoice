@@ -2,20 +2,18 @@
 
 namespace FbBuy\Package\Ecpay\Invoice;
 
-use FbBuy\Package\Ecpay\Invoice\Info\Info;
-
 trait Cryption
 {
     protected $cipher = 'aes-128-cbc';
 
     /**
      * 綠界說怎麼算就怎麼算
-     * @param  Info  $info
+     * @param  array $data
      * @return string
      */
-    public function encrypt(Info $info)
+    public function encrypt(array $data)
     {
-        $encoded = urlencode(json_encode($info->getInfo()));
+        $encoded = urlencode(json_encode($data));
         return openssl_encrypt($encoded, $this->cipher, $this->hashKey, 0, $this->hashIv);
     }
 
