@@ -13,6 +13,10 @@ trait Cryption
      */
     public function encrypt(array $data)
     {
+        if (openssl_cipher_iv_length($this->cipher) !== strlen($this->hashIv)) {
+            throw new \LogicException('hash iv is not valid');
+        }
+
         $encoded = urlencode(json_encode($data));
         return openssl_encrypt($encoded, $this->cipher, $this->hashKey, 0, $this->hashIv);
     }
@@ -24,6 +28,10 @@ trait Cryption
      */
     public function decrypt(string $encrypted)
     {
+        if (openssl_cipher_iv_length($this->cipher) !== strlen($this->hashIv)) {
+            throw new \LogicException('hash iv is not valid');
+        }
+
         $decrypted = openssl_decrypt($encrypted, $this->cipher, $this->hashKey, 0, $this->hashIv);
         return json_decode(urldecode($decrypted), true);
     }
