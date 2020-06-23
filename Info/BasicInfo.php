@@ -2,7 +2,6 @@
 
 namespace FbBuy\Package\Ecpay\Invoice\Info;
 
-use FbBuy\Package\Ecpay\Invoice\Constants\ContactType;
 use FbBuy\Package\Ecpay\Invoice\Contracts\ItemInterface;
 
 class BasicInfo extends Info
