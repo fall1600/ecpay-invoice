@@ -1,11 +1,10 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info\Decorator;
+namespace FbBuy\Package\Ecpay\Invoice\Info\IssueDecorator;
 
 use FbBuy\Package\Ecpay\Invoice\Info\Info;
-use FbBuy\Package\Ecpay\Invoice\Info\InfoDecorator;
 
-class Donate extends InfoDecorator
+class Donate extends Info
 {
     /**
      * @var Info
