@@ -70,6 +70,17 @@ class Ecpay
      */
     public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Allowance';
 
+    /**
+     * 查詢折讓-測試環境
+     * @var string
+     */
+    public const QUERY_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/Allowance';
+
+    /**
+     * 查詢折讓-正式環境
+     * @var string
+     */
+    public const QUERY_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Allowance';
 
     /**
      * @var bool
@@ -156,6 +167,8 @@ class Ecpay
 
     /**
      * 折讓發票
+     * @param AllowanceInfo $info
+     * @return array
      */
     public function allowance(AllowanceInfo $info)
     {
@@ -164,6 +177,23 @@ class Ecpay
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE;
 
         $this->sdk->Send = array_merge($this->sdk->Send, $info->getInfo());
+        return $this->sdk->Check_Out();
+    }
+
+    /**
+     * 查詢折讓明細
+     * @param string $invoiceNumber
+     * @param string $allowanceNumber
+     * @return array
+     */
+    public function queryAllowance(string $invoiceNumber, string $allowanceNumber)
+    {
+        $url = $this->isProduction ? self::QUERY_ALLOWANCE_URL_PRODUCTION : self::QUERY_ALLOWANCE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE_SEARCH;
+
+        $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
+        $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
         return $this->sdk->Check_Out();
     }
 
