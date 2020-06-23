@@ -2,7 +2,6 @@
 
 namespace FbBuy\Package\Ecpay\Invoice\Tests;
 
-use FbBuy\Package\Ecpay\Invoice\Info\BasicInfo;
 use FbBuy\Package\Ecpay\Invoice\Merchant;
 use PHPUnit\Framework\TestCase;
 
@@ -19,8 +18,6 @@ class MerchantTest extends TestCase
         $hashIv = 'B123456789012345';
 
         $merchant = new Merchant($merchantId, $hashKey, $hashIv);
-
-        $info = new BasicInfo($merchantId);
 
         $data = [
             'Name' => 'Test',

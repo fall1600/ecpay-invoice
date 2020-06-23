@@ -5,26 +5,9 @@ namespace FbBuy\Package\Ecpay\Invoice\Contracts;
 interface CustomerInterface
 {
     /**
-     * 客戶編號
-     * @return string
-     */
-    public function getCustomerId();
-
-    /**
-     * 統一編號
-     * @return string
-     */
-    public function getCustomerIdentifier();
-
-    /**
      * 手機或信箱的值
+     * e.g. 0988123456 or fbbuy@fbbuy.com.tw
      * @return string
      */
     public function getContact();
-
-    /**
-     * email or phone
-     * @return string
-     */
-    public function getContactType();
 }
