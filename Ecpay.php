@@ -3,7 +3,9 @@
 namespace FbBuy\Package\Ecpay\Invoice;
 
 use EcpayInvoice;
+use FbBuy\Package\Ecpay\Invoice\Contracts\CustomerInterface;
 use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
+use FbBuy\Package\Ecpay\Invoice\Info\AllowanceInfo;
 use FbBuy\Package\Ecpay\Invoice\Info\Info;
 
 class Ecpay
@@ -149,6 +151,19 @@ class Ecpay
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_VOID_SEARCH;
 
         $this->sdk->Send['RelateNumber'] = $order->getMerchantOrderNo();
+        return $this->sdk->Check_Out();
+    }
+
+    /**
+     * 折讓發票
+     */
+    public function allowance(AllowanceInfo $info)
+    {
+        $url = $this->isProduction ? self::ALLOWANCE_URL_PRODUCTION : self::ALLOWANCE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE;
+
+        $this->sdk->Send = array_merge($this->sdk->Send, $info->getInfo());
         return $this->sdk->Check_Out();
     }
 
