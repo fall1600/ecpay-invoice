@@ -3,7 +3,6 @@
 namespace FbBuy\Package\Ecpay\Invoice;
 
 use EcpayInvoice;
-use FbBuy\Package\Ecpay\Invoice\Contracts\CustomerInterface;
 use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
 use FbBuy\Package\Ecpay\Invoice\Info\AllowanceInfo;
 use FbBuy\Package\Ecpay\Invoice\Info\Info;
@@ -93,6 +92,18 @@ class Ecpay
      * @var string
      */
     public const INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/AllowanceInvalid';
+
+    /**
+     * 查詢作廢折讓-測試環境
+     * @var string
+     */
+    public const QUERY_INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/AllowanceInvalid';
+
+    /**
+     * 查詢作廢折讓-正式環境
+     * @var string
+     */
+    public const QUERY_INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/AllowanceInvalid';
 
     /**
      * @var bool
@@ -218,6 +229,17 @@ class Ecpay
         $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
         $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
         $this->sdk->Send['Reason'] = $reason;
+        return $this->sdk->Check_Out();
+    }
+
+    public function queryInvalidAllowance(string $invoiceNumber, string $allowanceNumber)
+    {
+        $url = $this->isProduction ? self::QUERY_INVALID_ALLOWANCE_URL_PRODUCTION : self::QUERY_INVALID_ALLOWANCE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE_VOID_SEARCH;
+
+        $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
+        $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
         return $this->sdk->Check_Out();
     }
 
