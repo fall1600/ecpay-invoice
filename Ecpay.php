@@ -56,6 +56,18 @@ class Ecpay
      */
     public const QUERY_INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/IssueInvalid';
 
+    /**
+     * 折讓-測試環境
+     * @var string
+     */
+    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/Allowance';
+
+    /**
+     * 折讓-正式環境
+     * @var string
+     */
+    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Allowance';
+
 
     /**
      * @var bool
@@ -77,6 +89,11 @@ class Ecpay
         $this->sdk = new EcpayInvoice();
     }
 
+    /**
+     * 開立發票
+     * @param Info $info
+     * @return array
+     */
     public function issue(Info $info)
     {
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
@@ -88,6 +105,11 @@ class Ecpay
         return $this->sdk->Check_Out();
     }
 
+    /**
+     * 查詢發票明細
+     * @param OrderInterface $order
+     * @return array
+     */
     public function queryIssue(OrderInterface $order)
     {
         $url = $this->isProduction ? self::QUERY_ISSUE_URL_PRODUCTION : self::QUERY_ISSUE_URL_TEST;
@@ -99,7 +121,7 @@ class Ecpay
     }
 
     /**
-     * 作廢
+     * 作廢發票
      * @param string $invoiceNumber 發票號碼
      * @param string $reason 作廢原因
      * @return array
@@ -115,6 +137,11 @@ class Ecpay
         return $this->sdk->Check_Out();
     }
 
+    /**
+     * 查詢作廢發票明細
+     * @param OrderInterface $order
+     * @return array
+     */
     public function queryInvalid(OrderInterface $order)
     {
         $url = $this->isProduction ? self::QUERY_INVALID_URL_PRODUCTION : self::QUERY_INVALID_URL_TEST;
