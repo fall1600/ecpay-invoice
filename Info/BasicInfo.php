@@ -22,16 +22,7 @@ class BasicInfo extends Info
             'SalesAmount' => 0,
         ];
 
-        switch ($this->customer->getContactType()) {
-            case ContactType::PHONE:
-                $result['CustomerPhone'] = $this->customer->getContact();
-                break;
-            case ContactType::EMAIL:
-                $result['CustomerEmail'] = $this->customer->getContact();
-                break;
-            default:
-                throw new \LogicException('unsupported contact type');
-        }
+        $result += $this->countContact();
 
         /** @var ItemInterface $item */
         foreach ($this->items as $item) {
@@ -74,5 +65,27 @@ class BasicInfo extends Info
         }
 
         return $item->getCount() * $item->getPrice() * 1.05;
+    }
+
+    /**
+     * @return array
+     */
+    protected function countContact()
+    {
+        $contact = $this->customer->getContact();
+        if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {
+            return [
+                'CustomerEmail' => $contact,
+            ];
+        }
+
+        preg_match('/^09\d{8}$/', $contact, $matches);
+        if (count($matches) > 0) {
+            return [
+                'CustomerPhone' => $matches[0],
+            ];
+        }
+
+        throw new \LogicException('unsupport contact data');
     }
 }

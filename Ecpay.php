@@ -13,13 +13,13 @@ class Ecpay
      * 開立-測試環境
      * @var string
      */
-    public const ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue';
+    public const ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/Issue';
 
     /**
      * 開立-正式環境
      * @var string
      */
-    public const ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/Issue';
+    public const ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Issue';
 
     /**
      * @var bool
@@ -38,7 +38,7 @@ class Ecpay
 
     public function __construct()
     {
-        $this->sdk = new \EcpayInvoice();
+        $this->sdk = new EcpayInvoice();
     }
 
     public function issue(Info $info)
@@ -46,9 +46,10 @@ class Ecpay
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
         $this->sdk->Invoice_Url = $url;
 
-        $this->sdk->Send = $info->getInfo();
+        $payload = $info->getInfo();
 
-        $this->sdk->Check_Out();
+        $this->sdk->Send = array_merge($this->sdk->Send, $payload);
+        return $this->sdk->Check_Out();
     }
 
     public function setMerchant(Merchant $merchant)
