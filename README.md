@@ -2,13 +2,26 @@
 
 ## How to use
 
-#### 建立交易資訊 (BasicInfo)
+#### 建立發票資訊 (BasicInfo)
  - $merchantId: 你在綠界申請的商店代號
  - $order: 你的訂單物件, 務必實作package 中的OrderInterface
  - $contact: 聯繫付款人方式, 務必實作package 中的ContactInterface
  - $vatType: 商品單價是否為含稅價
 ```php
 $info = new BasicInfo($order, $contact, $vatType = 1);
+```
+
+#### 發票要去的地方(印出來, 捐贈, 載具), 則一decorate
+ - $name: 買方姓名
+ - $addr: 買方地址
+ - $identifier: 統一編號
+ - $loveCode: 捐贈碼
+ - $carrierType: 載具類型(1: 綠界會員, 2: 自然人憑證, 3: 手機載具)
+ - $carrierVal: 載具值
+```php
+$info = new Paper($info, $name, $addr, $identifier);
+$info = new Donate($info, $loveCode = '168001');
+$info = new Carrier($info, $carrierType, $carrierVal);
 ```
 
 #### 建立Ecpay 物件, 注入商店資訊, 帶著發票資訊開立發票
@@ -37,8 +50,12 @@ $ecpay->queryInvalid($order);
 ```
 
 #### 折讓發票
- - $info: 折讓資訊
+ - $invoiceNumber: 發票號碼
+ - $vatType: 單價是否為含稅價
 ```php
+$info = new AllowanceBasicInfo($invoiceNumber, $vatType = 1);
+$info = new NotifyByEmail($info, 'fbbuy@fbbuy.com.tw');
+$info = new NotifyBySms($info, '0988123456');
 $ecpay->allowance(AllowanceInfo $info);
 ```
 
