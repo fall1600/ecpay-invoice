@@ -32,6 +32,18 @@ class Ecpay
      */
     public const QUERY_ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Issue';
 
+    /**
+     * 作廢-測試環境
+     * @var string
+     */
+    public const INVALID_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/IssueInvalid';
+
+    /**
+     * 作廢-正式環境
+     * @var string
+     */
+    public const INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/IssueInvalid';
+
 
     /**
      * @var bool
@@ -71,6 +83,23 @@ class Ecpay
         $this->sdk->Invoice_Url = $url;
 
         $this->sdk->Send['RelateNumber'] = $order->getMerchantOrderNo();
+        return $this->sdk->Check_Out();
+    }
+
+    /**
+     * 作廢
+     * @param string $invoiceNumber 發票號碼
+     * @param string $reason 作廢原因
+     * @return array
+     */
+    public function invalid(string $invoiceNumber, string $reason = '')
+    {
+        $url = $this->isProduction ? self::INVALID_URL_PRODUCTION : self::INVALID_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_VOID;
+
+        $this->sdk->Send['InvoiceNumber'] = $invoiceNumber;
+        $this->sdk->Send['Reason'] = $reason;
         return $this->sdk->Check_Out();
     }
 
