@@ -21,6 +21,9 @@
         },
         "exclude-from-classmap": [
             "/Tests/"
+        ],
+        "files": [
+            "sdk/Ecpay_Invoice.php"
         ]
     }
 }
