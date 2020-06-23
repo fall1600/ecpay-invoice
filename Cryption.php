@@ -59,6 +59,7 @@ trait Cryption
             $str = str_replace('%2a', '*', $str);
             $str = str_replace('%28', '(', $str);
             $str = str_replace('%29', ')', $str);
+            $str = str_replace('%20', '+', $str);
         }
 
         return $str ;
