@@ -83,6 +83,18 @@ class Ecpay
     public const QUERY_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Allowance';
 
     /**
+     * 作廢折讓-測試環境
+     * @var string
+     */
+    public const INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/AllowanceInvalid';
+
+    /**
+     * 作廢折讓-正式環境
+     * @var string
+     */
+    public const INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/AllowanceInvalid';
+
+    /**
      * @var bool
      */
     protected $isProduction = true;
@@ -194,6 +206,18 @@ class Ecpay
 
         $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
         $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
+        return $this->sdk->Check_Out();
+    }
+
+    public function invalidAllowance(string $invoiceNumber, string $allowanceNumber, string $reason = '')
+    {
+        $url = $this->isProduction ? self::INVALID_ALLOWANCE_URL_PRODUCTION : self::INVALID_ALLOWANCE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE_VOID;
+
+        $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
+        $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
+        $this->sdk->Send['Reason'] = $reason;
         return $this->sdk->Check_Out();
     }
 
