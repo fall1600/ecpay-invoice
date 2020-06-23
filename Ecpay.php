@@ -3,12 +3,11 @@
 namespace FbBuy\Package\Ecpay\Invoice;
 
 use EcpayInvoice;
+use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
 use FbBuy\Package\Ecpay\Invoice\Info\Info;
 
 class Ecpay
 {
-    public const VERSION = '3.0.0';
-
     /**
      * 開立-測試環境
      * @var string
@@ -20,6 +19,19 @@ class Ecpay
      * @var string
      */
     public const ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Issue';
+
+    /**
+     * 查詢發票明細-測試環境
+     * @var string
+     */
+    public const QUERY_ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/Issue';
+
+    /**
+     * 查詢發票明細-正式環境
+     * @var string
+     */
+    public const QUERY_ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Issue';
+
 
     /**
      * @var bool
@@ -49,6 +61,16 @@ class Ecpay
         $payload = $info->getInfo();
 
         $this->sdk->Send = array_merge($this->sdk->Send, $payload);
+        return $this->sdk->Check_Out();
+    }
+
+    public function queryIssue(OrderInterface $order)
+    {
+        $url = $this->isProduction ? self::QUERY_ISSUE_URL_PRODUCTION : self::QUERY_ISSUE_URL_TEST;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_SEARCH;
+        $this->sdk->Invoice_Url = $url;
+
+        $this->sdk->Send['RelateNumber'] = $order->getMerchantOrderNo();
         return $this->sdk->Check_Out();
     }
 
