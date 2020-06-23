@@ -71,7 +71,7 @@ class BasicInfo extends Info
      */
     protected function countContact()
     {
-        $contact = $this->customer->getContact();
+        $contact = $this->contact->getContact();
         if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {
             return [
                 'CustomerEmail' => $contact,

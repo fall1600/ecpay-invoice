@@ -2,7 +2,7 @@
 
 namespace FbBuy\Package\Ecpay\Invoice\Contracts;
 
-interface CustomerInterface
+interface ContactInterface
 {
     /**
      * 手機或信箱的值
