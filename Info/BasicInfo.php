@@ -18,7 +18,7 @@ class BasicInfo extends Info
         $result = [
             'RelateNumber' => $this->order->getMerchantOrderNo(),
             'TaxType' => \EcpayTaxType::Dutiable,
-            'InvType' => '07',
+            'InvType' => \EcpayInvType::General,
             'SalesAmount' => 0,
         ];
 
