@@ -13,7 +13,8 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "myclabs/php-enum": "^1.7"
     },
     "autoload": {
         "psr-4": {

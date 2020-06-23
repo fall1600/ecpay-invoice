@@ -1,5 +1,7 @@
 <?php
 
+namespace FbBuy\Package\Ecpay\Invoice\Contracts;
+
 interface OrderInterface
 {
     /**

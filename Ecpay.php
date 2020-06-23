@@ -2,6 +2,7 @@
 
 namespace FbBuy\Package\Ecpay\Invoice;
 
+use EcpayInvoice;
 use FbBuy\Package\Ecpay\Invoice\Info\Info;
 
 class Ecpay
@@ -30,25 +31,37 @@ class Ecpay
      */
     protected $merchant;
 
+    /**
+     * @var EcpayInvoice
+     */
+    protected $sdk;
+
+    public function __construct()
+    {
+        $this->sdk = new \EcpayInvoice();
+    }
+
     public function issue(Info $info)
     {
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($info->getInfo()));
+        $this->sdk->Send = $info->getInfo();
 
-        $resp = curl_exec($ch);
-        curl_close($ch);
-
-        var_dump($resp);
-//        return $result;
+        $this->sdk->Check_Out();
     }
 
     public function setMerchant(Merchant $merchant)
     {
+        if (! $this->sdk) {
+            throw new \LogicException('sdk is not initialized');
+        }
+
         $this->merchant = $merchant;
+
+        $this->sdk->MerchantID = $this->merchant->getId();
+        $this->sdk->HashKey = $this->merchant->getHashKey();
+        $this->sdk->HashIV = $this->merchant->getHashIv();
 
         return $this;
     }

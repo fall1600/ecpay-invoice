@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice;
+namespace FbBuy\Package\Ecpay\Invoice\Contracts;
 
 interface ItemInterface
 {
@@ -17,14 +17,7 @@ interface ItemInterface
     public function getPrice();
 
     /**
-     * 商品課稅別
-     * @return string
+     * 商品備註
      */
-    public function getTaxType();
-
-    /**
-     * 商品合計
-     * @return float
-     */
-    public function getAmount();
+    public function getRemark();
 }

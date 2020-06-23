@@ -2,12 +2,25 @@
 
 namespace FbBuy\Package\Ecpay\Invoice\Info;
 
+use FbBuy\Package\Ecpay\Invoice\Contracts\CustomerInterface;
+use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
+
 abstract class Info
 {
     /**
+     * @var OrderInterface
+     */
+    protected $order;
+
+    /**
+     * @var CustomerInterface
+     */
+    protected $customer;
+
+    /**
      * @var string
      */
-    protected $merchantId;
+    protected $vatType;
 
     /**
      * @return array
@@ -16,19 +29,16 @@ abstract class Info
 
     /**
      * Info constructor.
-     * @param  string  $merchantId
-     * @param  bool  $isPrint
+     * @param  OrderInterface  $order
+     * @param  CustomerInterface  $customer
+     * @param  string  $vatType 價格為含稅或未稅
      */
-    public function __construct(string $merchantId, bool $isPrint = false)
+    public function __construct(OrderInterface $order, CustomerInterface $customer, string $vatType = \EcpayVatType::Yes)
     {
-        $this->merchantId = $merchantId;
-    }
+        $this->order = $order;
 
-    /**
-     * @return string
-     */
-    public function getMerchantId()
-    {
-        return $this->merchantId;
+        $this->customer = $customer;
+
+        $this->vatType = $vatType;
     }
 }
