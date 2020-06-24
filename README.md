@@ -92,3 +92,15 @@ $ecpay->invalidAllowance($invoiceNumber, $allownceNumber, $reason);
 ```php
 $ecpay->queryInvalidAllowance($invoiceNumber, $allownceNumber);
 ```
+
+#### 驗證手機載具
+ - $carrier: 手機載具
+```php
+$ecpay->verifyCarrier($carrier);
+```
+
+#### 驗證捐贈代碼
+ - $lovecode: 捐贈代碼
+```php
+$ecpay->verifyLovecode($lovecode);
+```

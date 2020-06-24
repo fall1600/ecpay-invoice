@@ -106,6 +106,30 @@ class Ecpay
     public const QUERY_INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/AllowanceInvalid';
 
     /**
+     * 載具驗證-測試環境
+     * @var string
+     */
+    public const VERIFY_CARRIER_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/CheckMobileBarCode';
+
+    /**
+     * 載具驗證-正式環境
+     * @var string
+     */
+    public const VERIFY_CARRIER_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/CheckMobileBarCode';
+
+    /**
+     * 捐贈碼驗證-測試環境
+     * @var string
+     */
+    public const VERIFY_LOVECODE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/CheckLoveCode';
+
+    /**
+     * 捐贈碼驗證-正式環境
+     * @var string
+     */
+    public const VERIFY_LOVECODE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/CheckLoveCode';
+
+    /**
      * @var bool
      */
     protected $isProduction = true;
@@ -240,6 +264,36 @@ class Ecpay
 
         $this->sdk->Send['InvoiceNo'] = $invoiceNumber;
         $this->sdk->Send['AllowanceNo'] = $allowanceNumber;
+        return $this->sdk->Check_Out();
+    }
+
+    /**
+     * 驗證手機載具
+     * @param  string  $carrier
+     * @return array
+     */
+    public function verifyCarrier(string $carrier)
+    {
+        $url = $this->isProduction ? self::VERIFY_CARRIER_URL_PRODUCTION : self::VERIFY_CARRIER_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::CHECK_MOBILE_BARCODE;
+
+        $this->sdk->Send['BarCode'] = $carrier;
+        return $this->sdk->Check_Out();
+    }
+
+    /**
+     * 驗證捐贈代號
+     * @param  string  $carrier
+     * @return array
+     */
+    public function verifyLovecode(string $lovecode)
+    {
+        $url = $this->isProduction ? self::VERIFY_LOVECODE_URL_PRODUCTION : self::VERIFY_LOVECODE_URL_TEST;
+        $this->sdk->Invoice_Url = $url;
+        $this->sdk->Invoice_Method = \EcpayInvoiceMethod::CHECK_LOVE_CODE;
+
+        $this->sdk->Send['LoveCode'] = $lovecode;
         return $this->sdk->Check_Out();
     }
 
