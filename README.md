@@ -57,9 +57,10 @@ $ecpay->queryInvalid($order);
 
 #### 折讓發票, 建立折讓發票資訊, 塞入需折讓的品項
  - $invoiceNumber: 發票號碼
+ - $returnUrl: 一律走線上折讓, 需要掛returnUrl, 用來收買家同意後綠界的webhook
  - $vatType: 單價是否為含稅價
 ```php
-$info = new AllowanceBasicInfo($invoiceNumber, $vatType = 1);
+$info = new AllowanceBasicInfo($invoiceNumber, $returnUrl, $vatType = 1);
 $info->appendItem(ItemInterface $item);
 $info->appendItem(ItemInterface $item);
 
