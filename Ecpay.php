@@ -61,13 +61,13 @@ class Ecpay
      * 折讓-測試環境
      * @var string
      */
-    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/Allowance';
+    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/AllowanceByCollegiate';
 
     /**
      * 折讓-正式環境
      * @var string
      */
-    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Allowance';
+    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/AllowanceByCollegiate';
 
     /**
      * 查詢折讓-測試環境

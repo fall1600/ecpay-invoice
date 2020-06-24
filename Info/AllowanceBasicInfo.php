@@ -15,6 +15,7 @@ class AllowanceBasicInfo extends AllowanceInfo
     {
         $result = [
             'InvoiceNo' => $this->invoiceNumber,
+            'ReturnURL' => $this->returnUrl,
         ];
 
         $result['AllowanceAmount'] = 0;
