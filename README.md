@@ -37,6 +37,12 @@ $ecpay
     ->issue($info);
 ```
 
+#### 查詢發票明細
+ - $order: 你的訂單物件, 務必實作package 中的OrderInterface
+```php
+$ecpay->queryIssue($order);
+```
+
 #### 作廢發票
  - $invoiceNumber: 發票號碼
  - $reason: 作廢原因
@@ -49,7 +55,7 @@ $ecpay->invalid(string $invoiceNumber, string $reason = '');
 $ecpay->queryInvalid($order);
 ```
 
-#### 折讓發票
+#### 折讓發票, 折讓通常要通知買方, 有掛NotifyByEmail, 或NotifyBySms 就會個別通知
  - $invoiceNumber: 發票號碼
  - $vatType: 單價是否為含稅價
 ```php
@@ -59,7 +65,7 @@ $info = new NotifyBySms($info, '0988123456');
 $ecpay->allowance(AllowanceInfo $info);
 ```
 
-#### 查詢作廢明細
+#### 查詢折讓明細
  - $invoiceNumber: 發票號碼
  - $allowanceNumber: 作廢號碼
 ```php
@@ -74,7 +80,7 @@ $ecpay->queryAllowance($invoiceNumber, $allownceNumber);
 $ecpay->invalidAllowance($invoiceNumber, $allownceNumber, $reason);
 ```
 
-#### 查詢作廢明細
+#### 查詢作廢折讓明細
  - $invoiceNumber: 發票號碼
  - $allowanceNumber: 作廢號碼
 ```php
