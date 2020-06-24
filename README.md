@@ -55,13 +55,18 @@ $ecpay->invalid(string $invoiceNumber, string $reason = '');
 $ecpay->queryInvalid($order);
 ```
 
-#### 折讓發票, 折讓通常要通知買方, 有掛NotifyByEmail, 或NotifyBySms 就會個別通知
+#### 折讓發票, 建立折讓發票資訊, 塞入需折讓的品項
  - $invoiceNumber: 發票號碼
  - $vatType: 單價是否為含稅價
 ```php
 $info = new AllowanceBasicInfo($invoiceNumber, $vatType = 1);
+$info->appendItem(ItemInterface $item);
+$info->appendItem(ItemInterface $item);
+
+// 折讓通常要通知買方, 有掛NotifyByEmail, 或NotifyBySms 就會個別通知
 $info = new NotifyByEmail($info, 'fbbuy@fbbuy.com.tw');
 $info = new NotifyBySms($info, '0988123456');
+
 $ecpay->allowance(AllowanceInfo $info);
 ```
 
