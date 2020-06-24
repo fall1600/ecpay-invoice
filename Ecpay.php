@@ -152,7 +152,7 @@ class Ecpay
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_SEARCH;
         $this->sdk->Invoice_Url = $url;
 
-        $this->sdk->Send['RelateNumber'] = $order->getMerchantOrderNo();
+        $this->sdk->Send['RelateNumber'] = $order->getRelateNumber();
         return $this->sdk->Check_Out();
     }
 
@@ -184,7 +184,7 @@ class Ecpay
         $this->sdk->Invoice_Url = $url;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_VOID_SEARCH;
 
-        $this->sdk->Send['RelateNumber'] = $order->getMerchantOrderNo();
+        $this->sdk->Send['RelateNumber'] = $order->getRelateNumber();
         return $this->sdk->Check_Out();
     }
 

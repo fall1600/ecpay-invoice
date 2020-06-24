@@ -15,7 +15,7 @@ class BasicInfo extends Info
     public function getInfo()
     {
         $result = [
-            'RelateNumber' => $this->order->getMerchantOrderNo(),
+            'RelateNumber' => $this->order->getRelateNumber(),
             'TaxType' => \EcpayTaxType::Dutiable,
             'InvType' => \EcpayInvType::General,
             'SalesAmount' => 0,
