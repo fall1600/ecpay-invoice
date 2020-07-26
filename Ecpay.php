@@ -156,6 +156,8 @@ class Ecpay
      */
     public function issue(Info $info)
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
         $this->sdk->Invoice_Url = $url;
 
@@ -172,6 +174,8 @@ class Ecpay
      */
     public function queryIssue(OrderInterface $order)
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::QUERY_ISSUE_URL_PRODUCTION : self::QUERY_ISSUE_URL_TEST;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_SEARCH;
         $this->sdk->Invoice_Url = $url;
@@ -188,6 +192,8 @@ class Ecpay
      */
     public function invalid(string $invoiceNumber, string $reason = '')
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::INVALID_URL_PRODUCTION : self::INVALID_URL_TEST;
         $this->sdk->Invoice_Url = $url;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_VOID;
@@ -204,6 +210,8 @@ class Ecpay
      */
     public function queryInvalid(OrderInterface $order)
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::QUERY_INVALID_URL_PRODUCTION : self::QUERY_INVALID_URL_TEST;
         $this->sdk->Invoice_Url = $url;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::INVOICE_VOID_SEARCH;
@@ -219,6 +227,8 @@ class Ecpay
      */
     public function allowance(AllowanceInfo $info)
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::ALLOWANCE_URL_PRODUCTION : self::ALLOWANCE_URL_TEST;
         $this->sdk->Invoice_Url = $url;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE;
@@ -235,6 +245,8 @@ class Ecpay
      */
     public function queryAllowance(string $invoiceNumber, string $allowanceNumber)
     {
+        $this->resetSdkParameters();
+
         $url = $this->isProduction ? self::QUERY_ALLOWANCE_URL_PRODUCTION : self::QUERY_ALLOWANCE_URL_TEST;
         $this->sdk->Invoice_Url = $url;
         $this->sdk->Invoice_Method = \EcpayInvoiceMethod::ALLOWANCE_SEARCH;
@@ -321,5 +333,50 @@ class Ecpay
         $this->isProduction = $isProduction;
 
         return $this;
+    }
+
+    protected function resetSdkParameters()
+    {
+        $this->sdk->Send = [
+            'RelateNumber' => '',
+            'CustomerID' => '',
+            'CustomerIdentifier' => '',
+            'CustomerName' => '',
+            'CustomerAddr' => '',
+            'CustomerPhone' => '',
+            'CustomerEmail' => '',
+            'ClearanceMark' => '',
+            'Print' => '0',
+            'Donation' => '0',
+            'LoveCode' => '',
+            'CarruerType' => '',
+            'CarruerNum' => '',
+            'TaxType' => '',
+            'SalesAmount' => '',
+            'InvoiceRemark' => '',
+            'Items' => [],
+            'InvType' => '',
+            'vat' => '1',
+            'DelayFlag' => '',
+            'DelayDay' => 0,
+            'Tsr' => '',
+            'PayType' => '',
+            'PayAct' => '',
+            'NotifyURL' => '',
+            'InvoiceNo' => '',
+            'AllowanceNotify' => '',
+            'NotifyMail' => '',
+            'NotifyPhone' => '',
+            'AllowanceAmount' => '',
+            'InvoiceNumber'  => '',
+            'Reason'  => '',
+            'AllowanceNo' => '',
+            'Phone' => '',
+            'Notify' => '',
+            'InvoiceTag' => '',
+            'Notified' => '',
+            'BarCode' => '',
+            'OnLine' => true
+        ];
     }
 }
