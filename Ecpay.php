@@ -337,6 +337,7 @@ class Ecpay
 
     protected function resetSdkParameters()
     {
+        $this->sdk->TimeStamp = time();
         $this->sdk->Send = [
             'RelateNumber' => '',
             'CustomerID' => '',
