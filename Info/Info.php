@@ -23,6 +23,11 @@ abstract class Info
     protected $vatType;
 
     /**
+     * @var string
+     */
+    protected $taxType;
+
+    /**
      * @return array
      */
     abstract public function getInfo();
@@ -31,14 +36,17 @@ abstract class Info
      * Info constructor.
      * @param  OrderInterface  $order
      * @param  ContactInterface  $contact
-     * @param  string  $vatType 價格為含稅或未稅
+     * @param  string  $vatType  價格為含稅或未稅
+     * @param  string  $taxType  課稅類別
      */
-    public function __construct(OrderInterface $order, ContactInterface $contact, string $vatType = \EcpayVatType::Yes)
+    public function __construct(OrderInterface $order, ContactInterface $contact, string $vatType = \EcpayVatType::Yes, string $taxType = \EcpayTaxType::Dutiable)
     {
         $this->order = $order;
 
         $this->contact = $contact;
 
         $this->vatType = $vatType;
+
+        $this->taxType = $taxType;
     }
 }

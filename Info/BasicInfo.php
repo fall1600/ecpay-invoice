@@ -16,7 +16,7 @@ class BasicInfo extends Info
     {
         $result = [
             'RelateNumber' => $this->order->getRelateNumber(),
-            'TaxType' => \EcpayTaxType::Dutiable,
+            'TaxType' => $this->taxType,
             'InvType' => \EcpayInvType::General,
             'SalesAmount' => 0,
         ];
@@ -30,7 +30,7 @@ class BasicInfo extends Info
                 'ItemCount' => $item->getCount(),
                 'ItemWord' => $item->getWord(),
                 'ItemPrice' => $item->getPrice(),
-                'ItemTaxType' => \EcpayTaxType::Dutiable,
+                'ItemTaxType' => $this->taxType,
                 'ItemAmount' => $itemAmount = $this->countItemAmount($item),
                 'ItemRemark' => $item->getRemark(),
             ];
