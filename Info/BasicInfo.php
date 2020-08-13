@@ -21,6 +21,10 @@ class BasicInfo extends Info
             'SalesAmount' => 0,
         ];
 
+        if ($this->taxType == \EcpayTaxType::Zero) {
+            $result['ClearanceMark'] = \EcpayClearanceMark::No;
+        }
+
         $result += $this->countContact();
 
         /** @var ItemInterface $item */
