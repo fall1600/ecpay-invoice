@@ -13,121 +13,121 @@ class Ecpay
      * 開立-測試環境
      * @var string
      */
-    public const ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/Issue';
+    public const ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue';
 
     /**
      * 開立-正式環境
      * @var string
      */
-    public const ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/Issue';
+    public const ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/Issue';
 
     /**
      * 查詢發票明細-測試環境
      * @var string
      */
-    public const QUERY_ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/Issue';
+    public const QUERY_ISSUE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetIssue';
 
     /**
      * 查詢發票明細-正式環境
      * @var string
      */
-    public const QUERY_ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Issue';
+    public const QUERY_ISSUE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/GetIssue';
 
     /**
      * 作廢-測試環境
      * @var string
      */
-    public const INVALID_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/IssueInvalid';
+    public const INVALID_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/Invalid';
 
     /**
      * 作廢-正式環境
      * @var string
      */
-    public const INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/IssueInvalid';
+    public const INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/Invalid';
 
     /**
      * 查詢作廢-測試環境
      * @var string
      */
-    public const QUERY_INVALID_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/IssueInvalid';
+    public const QUERY_INVALID_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetInvalid';
 
     /**
      * 查詢作廢-正式環境
      * @var string
      */
-    public const QUERY_INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/IssueInvalid';
+    public const QUERY_INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/GetInvalid';
 
     /**
      * 折讓-測試環境
      * @var string
      */
-    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/AllowanceByCollegiate';
+    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
 
     /**
      * 折讓-正式環境
      * @var string
      */
-    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/AllowanceByCollegiate';
+    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
 
     /**
      * 查詢折讓-測試環境
      * @var string
      */
-    public const QUERY_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/Allowance';
+    public const QUERY_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetAllowance';
 
     /**
      * 查詢折讓-正式環境
      * @var string
      */
-    public const QUERY_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/Allowance';
+    public const QUERY_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/GetAllowance';
 
     /**
      * 作廢折讓-測試環境
      * @var string
      */
-    public const INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Invoice/AllowanceInvalid';
+    public const INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/AllowanceInvalid';
 
     /**
      * 作廢折讓-正式環境
      * @var string
      */
-    public const INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Invoice/AllowanceInvalid';
+    public const INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/AllowanceInvalid';
 
     /**
      * 查詢作廢折讓-測試環境
      * @var string
      */
-    public const QUERY_INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/AllowanceInvalid';
+    public const QUERY_INVALID_ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetAllowanceInvalid';
 
     /**
      * 查詢作廢折讓-正式環境
      * @var string
      */
-    public const QUERY_INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/AllowanceInvalid';
+    public const QUERY_INVALID_ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/GetAllowanceInvalid';
 
     /**
      * 載具驗證-測試環境
      * @var string
      */
-    public const VERIFY_CARRIER_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/CheckMobileBarCode';
+    public const VERIFY_CARRIER_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/CheckBarcode';
 
     /**
      * 載具驗證-正式環境
      * @var string
      */
-    public const VERIFY_CARRIER_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/CheckMobileBarCode';
+    public const VERIFY_CARRIER_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/CheckBarcode';
 
     /**
      * 捐贈碼驗證-測試環境
      * @var string
      */
-    public const VERIFY_LOVECODE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/Query/CheckLoveCode';
+    public const VERIFY_LOVECODE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/CheckLoveCode';
 
     /**
      * 捐贈碼驗證-正式環境
      * @var string
      */
-    public const VERIFY_LOVECODE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/Query/CheckLoveCode';
+    public const VERIFY_LOVECODE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/CheckLoveCode';
 
     /**
      * @var bool
