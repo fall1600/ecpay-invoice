@@ -7,15 +7,6 @@ trait Cryption
     protected $cipher = 'aes-128-cbc';
 
     /**
-     * @param  string  $input
-     * @return string
-     */
-    public function countChecksum(string $input)
-    {
-        return strtolower(hash('sha256', $this->hashKey.$input.$this->hashIv));
-    }
-    
-    /**
      * 綠界說怎麼算就怎麼算
      * @param  array $data
      * @return string
@@ -27,7 +18,13 @@ trait Cryption
         }
 
         $encoded = urlencode(json_encode($data));
-        return openssl_encrypt($encoded, $this->cipher, $this->hashKey, 0, $this->hashIv);
+        return openssl_encrypt(
+            $this->addPadding($encoded),
+            $this->cipher,
+            $this->hashKey,
+            OPENSSL_ZERO_PADDING,
+            $this->hashIv
+        );
     }
 
     /**
@@ -41,27 +38,47 @@ trait Cryption
             throw new \LogicException('hash iv is not valid');
         }
 
-        $decrypted = openssl_decrypt($encrypted, $this->cipher, $this->hashKey, 0, $this->hashIv);
+        $decrypted = $this->stripPadding(
+            openssl_decrypt(
+                $encrypted,
+                $this->cipher,
+                $this->hashKey,
+                OPENSSL_ZERO_PADDING,
+                $this->hashIv
+            )
+        );
         return json_decode(urldecode($decrypted), true);
     }
 
-    protected function replaceSymbol(string $str)
+    /**
+     * 強度 128/8 = 16bytes
+     * @param string $str
+     * @param int $size
+     * @return string
+     */
+    protected function addPadding(string $str, int $size = 16)
     {
-        if(! empty($str)) {
-            $str = str_replace('%2D', '-', $str);
-            $str = str_replace('%2d', '-', $str);
-            $str = str_replace('%5F', '_', $str);
-            $str = str_replace('%5f', '_', $str);
-            $str = str_replace('%2E', '.', $str);
-            $str = str_replace('%2e', '.', $str);
-            $str = str_replace('%21', '!', $str);
-            $str = str_replace('%2A', '*', $str);
-            $str = str_replace('%2a', '*', $str);
-            $str = str_replace('%28', '(', $str);
-            $str = str_replace('%29', ')', $str);
-            $str = str_replace('%20', '+', $str);
+        $len = strlen($str);
+        $pad = $size - ($len % $size);
+        $str .= str_repeat(chr($pad), $pad);
+        return $str;
+    }
+
+    /**
+     * @param $string
+     * @return string
+     * @throws \Exception
+     */
+    protected function stripPadding($string)
+    {
+        $slast = ord(substr($string, -1));
+        $slastc = chr($slast);
+        $pcheck = substr($string, -$slast);
+        if (preg_match("/$slastc{" . $slast . "}/", $string)) {
+            $string = substr($string, 0, strlen($string) - $slast);
+            return $string;
         }
 
-        return $str ;
+        throw new \Exception("bad hashed string $string");
     }
 }
