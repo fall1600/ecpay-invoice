@@ -29,8 +29,9 @@ trait Cryption
 
     /**
      * 綠界說怎麼算就怎麼算
-     * @param  string  $encrypted
+     * @param string $encrypted
      * @return array
+     * @throws \Exception
      */
     public function decrypt(string $encrypted)
     {

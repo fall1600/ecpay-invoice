@@ -9,6 +9,8 @@ use FbBuy\Package\Ecpay\Invoice\Info\Info;
 
 class Ecpay
 {
+    public const VERSION = '3.2.1';
+
     /**
      * 開立-測試環境
      * @var string
@@ -152,19 +154,21 @@ class Ecpay
     /**
      * 開立發票
      * @param Info $info
-     * @return array
+     * @return Response
+     * @throws \Exception
      */
     public function issue(Info $info)
     {
-        $this->resetSdkParameters();
-
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
-        $this->sdk->Invoice_Url = $url;
 
-        $payload = $info->getInfo();
+        $resp = $this->postData(
+            $url,
+            $this->preparePayload($info)
+        );
 
-        $this->sdk->Send = array_merge($this->sdk->Send, $payload);
-        return $this->sdk->Check_Out();
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**
@@ -333,6 +337,57 @@ class Ecpay
         $this->isProduction = $isProduction;
 
         return $this;
+    }
+
+    /**
+     * @param Info $info
+     * @return array
+     * @throws \Exception
+     */
+    protected function preparePayload(Info $info)
+    {
+        $payload = [
+            'MerchantID' => $this->merchant->getId(),
+            'RqHeader' => [
+                'Timestamp' => $ts = time(),
+                'RqID' => $ts.'-'.random_int(0, PHP_INT_MAX),
+                'Revision' => self::VERSION,
+            ],
+        ];
+
+        $payload['Data'] = $this->merchant->encrypt($info->getInfo());
+        return $payload;
+    }
+
+    /**
+     * @param string $url
+     * @param array $payload
+     * @return mixed
+     * @throws \JsonException
+     * @throws \Exception
+     */
+    protected function postData(string $url, array $payload)
+    {
+        $payload = [
+            'MerchantID' => $this->merchant->getId(),
+            'RqHeader' => [
+                'Timestamp' => $ts = time(),
+                'RqID' => $ts.'-'.random_int(0, PHP_INT_MAX),
+                'Revision' => self::VERSION,
+            ],
+        ];
+
+        $payload['Data'] = $this->merchant->decrypt(json_encode($payload));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result, true, 512, JSON_THROW_ON_ERROR);
     }
 
     protected function resetSdkParameters()
