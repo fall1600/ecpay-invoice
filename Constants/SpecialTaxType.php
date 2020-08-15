@@ -25,7 +25,7 @@ class SpecialTaxType extends Enum
     // 8:代表空白為免稅或非銷項特種稅額之資料
     public const EIGHT = '8';
 
-    protected $rules = [
+    public static $rules = [
         // 當課稅類別[TaxType]為 1/2/9 時,則此欄位請帶空字串
         TaxType::DUTIABLE => self::NONE,
         TaxType::ZERO => self::NONE,
