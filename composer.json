@@ -7,6 +7,10 @@
         {
             "name": "Harbor",
             "email": "harborlin@17.media"
+        },
+        {
+            "name": "Yu-Shing",
+            "email": "yushinglai@17.media"
         }
     ],
     "minimum-stability": "stable",
