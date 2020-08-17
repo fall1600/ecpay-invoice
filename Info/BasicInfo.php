@@ -2,7 +2,10 @@
 
 namespace FbBuy\Package\Ecpay\Invoice\Info;
 
+use FbBuy\Package\Ecpay\Invoice\Constants\InvType;
+use FbBuy\Package\Ecpay\Invoice\Constants\TaxType;
 use FbBuy\Package\Ecpay\Invoice\Contracts\ItemInterface;
+use FbBuy\Package\Ecpay\Invoice\Contracts\ItemWithTaxTypeInterface;
 
 class BasicInfo extends Info
 {
@@ -18,27 +21,33 @@ class BasicInfo extends Info
             'RelateNumber' => $this->order->getRelateNumber(),
             'TaxType' => $this->taxType,
             'SpecialTaxType' => $this->specialTaxType,
-            'InvType' => \EcpayInvType::General,
+            'InvType' => InvType::GENERAL,
             'SalesAmount' => 0,
         ];
 
-        if ($this->taxType == \EcpayTaxType::Zero) {
-            $result['ClearanceMark'] = \EcpayClearanceMark::No;
+        // 當課稅類別[TaxType]=2(零稅率)時,為必填
+        if (TaxType::ZERO == $this->taxType) {
+            $result['ClearanceMark'] = $this->clearanceType;
         }
 
         $result += $this->countContact();
 
         /** @var ItemInterface $item */
         foreach ($this->items as $item) {
-            $result['Items'][]= [
+            $datum = [
                 'ItemName' => $item->getName(),
                 'ItemCount' => $item->getCount(),
                 'ItemWord' => $item->getWord(),
                 'ItemPrice' => $item->getPrice(),
-                'ItemTaxType' => $this->taxType,
                 'ItemAmount' => $itemAmount = $this->countItemAmount($item),
                 'ItemRemark' => $item->getRemark(),
             ];
+
+            if ($item instanceof ItemWithTaxTypeInterface) {
+                $datum['ItemTaxType'] = $item->getTaxType();
+            }
+
+            $result['Items'][]= $datum;
 
             $result['SalesAmount'] += $itemAmount;
         }
@@ -52,6 +61,10 @@ class BasicInfo extends Info
      */
     public function appendItem(ItemInterface $item)
     {
+        if (TaxType::MIX === $this->taxType && ! ($item instanceof ItemWithTaxTypeInterface)) {
+            throw new \LogicException("Implements ItemWithTaxTypeInterface when you use Mix TaxType");
+        }
+
         $this->items[]= $item;
 
         return $this;
