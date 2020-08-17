@@ -59,9 +59,18 @@ abstract class Info
 
         $this->contact = $contact;
 
-        $this->vatType = $vatType;
+        $this->setVatType($vatType);
 
         $this->setTaxType($taxType, $specialTaxType);
+    }
+
+    protected function setVatType(string $vatType)
+    {
+        if (! VatType::isValid($vatType)) {
+            throw new \LogicException("unsupported vat type: $vatType");
+        }
+
+        $this->vatType = $vatType;
     }
 
     protected function setTaxType(string $taxType, string $specialTaxType)
