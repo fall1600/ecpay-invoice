@@ -17,6 +17,7 @@ class BasicInfo extends Info
         $result = [
             'RelateNumber' => $this->order->getRelateNumber(),
             'TaxType' => $this->taxType,
+            'SpecialTaxType' => $this->specialTaxType,
             'InvType' => \EcpayInvType::General,
             'SalesAmount' => 0,
         ];
