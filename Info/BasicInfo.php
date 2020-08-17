@@ -12,7 +12,6 @@ class BasicInfo extends Info
     protected $items = [];
 
     /**
-     * InvType 07: 一般稅額, 08: 特種稅額(用不到)
      * @return array
      */
     public function getInfo()
@@ -21,7 +20,7 @@ class BasicInfo extends Info
             'RelateNumber' => $this->order->getRelateNumber(),
             'TaxType' => $this->taxType,
             'SpecialTaxType' => $this->specialTaxType,
-            'InvType' => InvType::GENERAL,
+            'InvType' => $this->invType,
             'SalesAmount' => 0,
         ];
 
