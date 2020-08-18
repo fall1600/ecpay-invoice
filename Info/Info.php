@@ -3,7 +3,6 @@
 namespace FbBuy\Package\Ecpay\Invoice\Info;
 
 use FbBuy\Package\Ecpay\Invoice\Constants\ClearanceType;
-use FbBuy\Package\Ecpay\Invoice\Constants\InvType;
 use FbBuy\Package\Ecpay\Invoice\Constants\SpecialTaxType;
 use FbBuy\Package\Ecpay\Invoice\Constants\TaxType;
 use FbBuy\Package\Ecpay\Invoice\Constants\VatType;
@@ -44,12 +43,6 @@ abstract class Info
     protected $clearanceType;
 
     /**
-     * 字軌類別
-     * @var string
-     */
-    protected $invType;
-
-    /**
      * @return array
      */
     abstract public function getInfo();
@@ -62,7 +55,6 @@ abstract class Info
      * @param string $taxType 課稅類別
      * @param string $specialTaxType 特種稅率
      * @param string $clearanceType 通關方式(經海關, 非經海關)
-     * @param string $invType 字軌類別
      */
     public function __construct(
         OrderInterface $order,
@@ -70,14 +62,11 @@ abstract class Info
         string $vatType = VatType::YES,
         string $taxType = TaxType::DUTIABLE,
         string $specialTaxType = '',
-        string $clearanceType = ClearanceType::NOT_BY_CUSTOMS,
-        string $invType = InvType::GENERAL
+        string $clearanceType = ClearanceType::NOT_BY_CUSTOMS
     ) {
         $this->order = $order;
 
         $this->contact = $contact;
-
-        $this->invType = $invType;
 
         $this->setVatType($vatType);
 
@@ -95,8 +84,12 @@ abstract class Info
 
     protected function setTaxType(string $taxType, string $specialTaxType, string $clearanceType)
     {
-        $mapped = SpecialTaxType::$rules[$taxType];
-        if ($mapped !== $specialTaxType && ! in_array($specialTaxType, $mapped)) {
+        $correctSpecial = SpecialTaxType::$rules[$taxType];
+        if (! is_array($correctSpecial) && $correctSpecial !== $specialTaxType) {
+            throw new \LogicException("wrong tax type:$taxType with special tax type:$specialTaxType");
+        }
+
+        if (is_array($correctSpecial) && ! in_array($specialTaxType, $correctSpecial)) {
             throw new \LogicException("wrong tax type:$taxType with special tax type:$specialTaxType");
         }
 

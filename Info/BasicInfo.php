@@ -20,7 +20,7 @@ class BasicInfo extends Info
             'RelateNumber' => $this->order->getRelateNumber(),
             'TaxType' => $this->taxType,
             'SpecialTaxType' => $this->specialTaxType,
-            'InvType' => $this->invType,
+            'InvType' => $this->taxType === TaxType::SPECIAL ? InvType::SPECIAL : InvType::GENERAL,
             'SalesAmount' => 0,
         ];
 
