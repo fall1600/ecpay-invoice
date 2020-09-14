@@ -6,7 +6,7 @@ use MyCLabs\Enum\Enum;
 
 class SpecialTaxType extends Enum
 {
-    public const NONE = '';
+    public const NONE = '0';
     // 1:代表酒家及有陪侍服務之茶室、咖啡廳、酒吧之營業稅稅率, 稅率為 25%
     public const ONE = '1';
     // 2:代表夜總會、有娛樂節目之餐飲店之營業稅稅率,稅率為 15%
