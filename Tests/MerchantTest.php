@@ -1,8 +1,8 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Tests;
+namespace fall1600\Package\Ecpay\Invoice\Tests;
 
-use FbBuy\Package\Ecpay\Invoice\Merchant;
+use fall1600\Package\Ecpay\Invoice\Merchant;
 use PHPUnit\Framework\TestCase;
 
 class MerchantTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice;
+namespace fall1600\Package\Ecpay\Invoice;
 
 trait Cryption
 {

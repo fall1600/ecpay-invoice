@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Contracts;
+namespace fall1600\Package\Ecpay\Invoice\Contracts;
 
 interface ItemInterface
 {

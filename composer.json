@@ -1,16 +1,12 @@
 {
-    "name": "fbbuy/ecpay-invoice",
+    "name": "fall1600/ecpay-invoice",
     "description": "ecpay invoice lib",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Harbor",
-            "email": "harborlin@17.media"
-        },
-        {
-            "name": "Yu-Shing",
-            "email": "yushinglai@17.media"
+            "name": "fall1600",
+            "email": "fall1600@gmail.com"
         }
     ],
     "minimum-stability": "stable",
@@ -22,13 +18,10 @@
     },
     "autoload": {
         "psr-4": {
-            "FbBuy\\Package\\Ecpay\\Invoice\\": ""
+            "fall1600\\Package\\Ecpay\\Invoice\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
-        ],
-        "files": [
-            "sdk/Ecpay_Invoice.php"
         ]
     }
 }

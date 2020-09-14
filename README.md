@@ -65,7 +65,7 @@ $info->appendItem(ItemInterface $item);
 $info->appendItem(ItemInterface $item);
 
 // 折讓通常要通知買方, 有掛NotifyByEmail, 或NotifyBySms 就會個別通知
-$info = new NotifyByEmail($info, 'fbbuy@fbbuy.com.tw');
+$info = new NotifyByEmail($info, 'service@example.com');
 $info = new NotifyBySms($info, '0988123456');
 
 $ecpay->allowance(AllowanceInfo $info);

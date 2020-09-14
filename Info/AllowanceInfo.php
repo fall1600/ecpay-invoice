@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info;
+namespace fall1600\Package\Ecpay\Invoice\Info;
 
 abstract class AllowanceInfo
 {

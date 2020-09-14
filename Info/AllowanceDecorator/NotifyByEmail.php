@@ -1,8 +1,8 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info\AllowanceDecorator;
+namespace fall1600\Package\Ecpay\Invoice\Info\AllowanceDecorator;
 
-use FbBuy\Package\Ecpay\Invoice\Info\AllowanceInfo;
+use fall1600\Package\Ecpay\Invoice\Info\AllowanceInfo;
 
 class NotifyByEmail extends AllowanceInfo
 {

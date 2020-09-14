@@ -1,8 +1,8 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info;
+namespace fall1600\Package\Ecpay\Invoice\Info;
 
-use FbBuy\Package\Ecpay\Invoice\Contracts\ItemInterface;
+use fall1600\Package\Ecpay\Invoice\Contracts\ItemInterface;
 
 class AllowanceBasicInfo extends AllowanceInfo
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Constants;
+namespace fall1600\Package\Ecpay\Invoice\Constants;
 
 use MyCLabs\Enum\Enum;
 

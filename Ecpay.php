@@ -1,11 +1,11 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice;
+namespace fall1600\Package\Ecpay\Invoice;
 
 use EcpayInvoice;
-use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
-use FbBuy\Package\Ecpay\Invoice\Info\AllowanceInfo;
-use FbBuy\Package\Ecpay\Invoice\Info\Info;
+use fall1600\Package\Ecpay\Invoice\Contracts\OrderInterface;
+use fall1600\Package\Ecpay\Invoice\Info\AllowanceInfo;
+use fall1600\Package\Ecpay\Invoice\Info\Info;
 
 class Ecpay
 {

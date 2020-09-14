@@ -1,8 +1,8 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info\IssueDecorator;
+namespace fall1600\Package\Ecpay\Invoice\Info\IssueDecorator;
 
-use FbBuy\Package\Ecpay\Invoice\Info\Info;
+use fall1600\Package\Ecpay\Invoice\Info\Info;
 
 class Carrier extends Info
 {

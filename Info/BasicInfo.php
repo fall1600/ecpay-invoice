@@ -1,11 +1,11 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info;
+namespace fall1600\Package\Ecpay\Invoice\Info;
 
-use FbBuy\Package\Ecpay\Invoice\Constants\InvType;
-use FbBuy\Package\Ecpay\Invoice\Constants\TaxType;
-use FbBuy\Package\Ecpay\Invoice\Contracts\ItemInterface;
-use FbBuy\Package\Ecpay\Invoice\Contracts\ItemWithTaxTypeInterface;
+use fall1600\Package\Ecpay\Invoice\Constants\InvType;
+use fall1600\Package\Ecpay\Invoice\Constants\TaxType;
+use fall1600\Package\Ecpay\Invoice\Contracts\ItemInterface;
+use fall1600\Package\Ecpay\Invoice\Contracts\ItemWithTaxTypeInterface;
 
 class BasicInfo extends Info
 {

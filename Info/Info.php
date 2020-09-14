@@ -1,13 +1,13 @@
 <?php
 
-namespace FbBuy\Package\Ecpay\Invoice\Info;
+namespace fall1600\Package\Ecpay\Invoice\Info;
 
-use FbBuy\Package\Ecpay\Invoice\Constants\ClearanceType;
-use FbBuy\Package\Ecpay\Invoice\Constants\SpecialTaxType;
-use FbBuy\Package\Ecpay\Invoice\Constants\TaxType;
-use FbBuy\Package\Ecpay\Invoice\Constants\VatType;
-use FbBuy\Package\Ecpay\Invoice\Contracts\ContactInterface;
-use FbBuy\Package\Ecpay\Invoice\Contracts\OrderInterface;
+use fall1600\Package\Ecpay\Invoice\Constants\ClearanceType;
+use fall1600\Package\Ecpay\Invoice\Constants\SpecialTaxType;
+use fall1600\Package\Ecpay\Invoice\Constants\TaxType;
+use fall1600\Package\Ecpay\Invoice\Constants\VatType;
+use fall1600\Package\Ecpay\Invoice\Contracts\ContactInterface;
+use fall1600\Package\Ecpay\Invoice\Contracts\OrderInterface;
 
 abstract class Info
 {
