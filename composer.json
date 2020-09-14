@@ -1,6 +1,6 @@
 {
     "name": "fall1600/ecpay-invoice",
-    "description": "ecpay invoice lib",
+    "description": "Invoice solution ECPay(綠界科技), implementing by pure PHP",
     "type": "library",
     "license": "MIT",
     "authors": [
