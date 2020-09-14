@@ -4,6 +4,7 @@ namespace fall1600\Package\Ecpay\Invoice\Info;
 
 use fall1600\Package\Ecpay\Invoice\Constants\InvType;
 use fall1600\Package\Ecpay\Invoice\Constants\TaxType;
+use fall1600\Package\Ecpay\Invoice\Constants\VatType;
 use fall1600\Package\Ecpay\Invoice\Contracts\ItemInterface;
 use fall1600\Package\Ecpay\Invoice\Contracts\ItemWithTaxTypeInterface;
 
@@ -76,10 +77,11 @@ class BasicInfo extends Info
      */
     protected function countItemAmount(ItemInterface $item)
     {
-        if ($this->vatType === \EcpayVatType::Yes) {
+        if (VatType::YES === $this->vatType) {
             return $item->getCount() * $item->getPrice();
         }
 
+        // fixme 拆掉寫死的趴數
         return $item->getCount() * $item->getPrice() * 1.05;
     }
 

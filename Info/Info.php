@@ -61,7 +61,7 @@ abstract class Info
         ContactInterface $contact,
         string $vatType = VatType::YES,
         string $taxType = TaxType::DUTIABLE,
-        string $specialTaxType = '',
+        string $specialTaxType = SpecialTaxType::NONE,
         string $clearanceType = ClearanceType::NOT_BY_CUSTOMS
     ) {
         $this->order = $order;
