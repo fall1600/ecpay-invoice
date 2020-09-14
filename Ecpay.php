@@ -150,10 +150,7 @@ class Ecpay
     {
         $url = $this->isProduction ? self::ISSUE_URL_PRODUCTION : self::ISSUE_URL_TEST;
 
-        $resp = $this->postData(
-            $url,
-            $this->preparePayload($info)
-        );
+        $resp = $this->postData($url, $info->getInfo());
 
         $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
 
@@ -252,26 +249,6 @@ class Ecpay
     }
 
     /**
-     * @param Info $info
-     * @return array
-     * @throws \Exception
-     */
-    protected function preparePayload(Info $info)
-    {
-        $payload = [
-            'MerchantID' => $this->merchant->getId(),
-            'RqHeader' => [
-                'Timestamp' => $ts = time(),
-                'RqID' => $ts.'-'.random_int(0, PHP_INT_MAX),
-                'Revision' => self::VERSION,
-            ],
-        ];
-
-        $payload['Data'] = $this->merchant->encrypt($info->getInfo());
-        return $payload;
-    }
-
-    /**
      * @param string $url
      * @param array $payload
      * @return mixed
@@ -280,21 +257,20 @@ class Ecpay
      */
     protected function postData(string $url, array $payload)
     {
-        $payload = [
+        $data = [
             'MerchantID' => $this->merchant->getId(),
             'RqHeader' => [
                 'Timestamp' => $ts = time(),
                 'RqID' => $ts.'-'.random_int(0, PHP_INT_MAX),
                 'Revision' => self::VERSION,
             ],
+            'Data' => $this->merchant->encrypt($payload),
         ];
-
-        $payload['Data'] = $this->merchant->decrypt(json_encode($payload));
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
