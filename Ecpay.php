@@ -288,11 +288,25 @@ class Ecpay
 
     /**
      * 驗證手機載具
-     * @param  string  $carrier
-     * @return array
+     *
+     * @param   string  $carrier
+     *
+     * @return Response
+     * @throws \JsonException
      */
     public function verifyCarrier(string $carrier)
     {
+        $url = $this->isProduction ? self::VERIFY_CARRIER_URL_PRODUCTION : self::VERIFY_CARRIER_URL_TEST;
+
+        $payload = [
+            'BarCode' => $carrier,
+        ];
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**
