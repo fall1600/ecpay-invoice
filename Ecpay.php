@@ -192,12 +192,30 @@ class Ecpay
 
     /**
      * 作廢發票
-     * @param string $invoiceNumber 發票號碼
-     * @param string $reason 作廢原因
-     * @return array
+     * aha: 開立日期格式雖然要求到小時, 但實測僅需提供到yyyy-MM-dd 即可
+     *
+     * @param   string  $invoiceNo  發票號碼
+     * @param   string  $issuedAt   發票開立日期 (yyyy-MM-dd HH)
+     * @param   string  $reason     作廢原因
+     *
+     * @return Response
+     * @throws \JsonException
      */
-    public function invalid(string $invoiceNumber, string $reason = '')
+    public function invalid(string $invoiceNo, string $issuedAt, string $reason)
     {
+        $url = $this->isProduction ? self::INVALID_URL_PRODUCTION : self::INVALID_URL_TEST;
+
+        $payload = [
+            'InvoiceNo' => $invoiceNo,
+            'InvoiceDate' => $issuedAt,
+            'Reason' => $reason,
+        ];
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**
