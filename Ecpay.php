@@ -220,11 +220,30 @@ class Ecpay
 
     /**
      * 查詢作廢發票明細
-     * @param OrderInterface $order
-     * @return array
+     *
+     * @param   OrderInterface  $order
+     *
+     * @param   string          $invoiceNo
+     * @param   string          $issuedAt
+     *
+     * @return Response
+     * @throws \JsonException
      */
-    public function queryInvalid(OrderInterface $order)
+    public function queryInvalid(OrderInterface $order, string $invoiceNo, string $issuedAt)
     {
+        $url = $this->isProduction ? self::QUERY_INVALID_URL_PRODUCTION : self::QUERY_INVALID_URL_TEST;
+
+        $payload = [
+            'RelateNumber' => $order->getRelateNumber(),
+            'InvoiceNo' => $invoiceNo,
+            'InvoiceDate' => $issuedAt,
+        ];
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**
