@@ -159,11 +159,35 @@ class Ecpay
 
     /**
      * 查詢發票明細
-     * @param OrderInterface $order
-     * @return array
+     * aha: 文件上發票號碼, 開立日期為必填, 實測為選填
+     *
+     * @param   OrderInterface  $order
+     * @param   string|null     $invoiceNo 發票號碼
+     * @param   string|null     $issuedAt 發票開立日期 (yyyy-MM-dd)
+     * @return Response
+     * @throws \JsonException
      */
-    public function queryIssue(OrderInterface $order)
+    public function queryIssue(OrderInterface $order, string $invoiceNo = null, string $issuedAt = null)
     {
+        $url = $this->isProduction ? self::QUERY_ISSUE_URL_PRODUCTION : self::QUERY_ISSUE_URL_TEST;
+
+        $payload = [
+            'RelateNumber' => $order->getRelateNumber(),
+        ];
+
+        if ($invoiceNo) {
+            $payload['InvoiceNo'] = $invoiceNo;
+        }
+
+        if ($issuedAt) {
+            $payload['InvoiceDate'] = $issuedAt;
+        }
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**
