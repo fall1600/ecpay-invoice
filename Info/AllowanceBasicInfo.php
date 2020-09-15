@@ -2,6 +2,8 @@
 
 namespace fall1600\Package\Ecpay\Invoice\Info;
 
+use fall1600\Package\Ecpay\Invoice\Constants\TaxType;
+use fall1600\Package\Ecpay\Invoice\Constants\VatType;
 use fall1600\Package\Ecpay\Invoice\Contracts\ItemInterface;
 
 class AllowanceBasicInfo extends AllowanceInfo
@@ -25,7 +27,8 @@ class AllowanceBasicInfo extends AllowanceInfo
                 'ItemCount' => $item->getCount(),
                 'ItemWord' => $item->getWord(),
                 'ItemPrice' => $item->getPrice(),
-                'ItemTaxType' => \EcpayTaxType::Dutiable,
+                // fixme: 拆掉寫死的稅別
+                'ItemTaxType' => TaxType::DUTIABLE,
                 'ItemAmount' => $itemAmount = $this->countItemAmount($item),
             ];
 
@@ -47,10 +50,11 @@ class AllowanceBasicInfo extends AllowanceInfo
 
     protected function countItemAmount(ItemInterface $item)
     {
-        if ($this->vatType === \EcpayVatType::Yes) {
+        if (VatType::YES === $this->vatType) {
             return $item->getCount() * $item->getPrice();
         }
 
+        // fixme: 拆掉寫死的趴數
         return $item->getCount() * $item->getPrice() * 1.05;
     }
 }

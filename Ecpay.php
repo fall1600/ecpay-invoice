@@ -248,11 +248,24 @@ class Ecpay
 
     /**
      * 折讓發票
-     * @param AllowanceInfo $info
+     *
+     * @param   AllowanceInfo  $info
+     *
      * @return array
+     * @throws \JsonException
      */
     public function allowance(AllowanceInfo $info)
     {
+        $url = $this->isProduction ? self::ALLOWANCE_URL_PRODUCTION : self::ALLOWANCE_URL_TEST;
+
+        $payload = [
+        ];
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     /**

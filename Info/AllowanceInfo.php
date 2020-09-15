@@ -2,6 +2,8 @@
 
 namespace fall1600\Package\Ecpay\Invoice\Info;
 
+use fall1600\Package\Ecpay\Invoice\Constants\VatType;
+
 abstract class AllowanceInfo
 {
     /**
@@ -31,7 +33,7 @@ abstract class AllowanceInfo
      * @param  string  $returnUrl
      * @param  string  $vatType
      */
-    public function __construct(string $invoiceNumber, string $returnUrl, string $vatType = \EcpayVatType::Yes)
+    public function __construct(string $invoiceNumber, string $returnUrl, string $vatType = VatType::YES)
     {
         $this->invoiceNumber = $invoiceNumber;
 
