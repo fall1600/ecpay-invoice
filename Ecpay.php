@@ -59,16 +59,28 @@ class Ecpay
     public const QUERY_INVALID_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/GetInvalid';
 
     /**
-     * 折讓-測試環境
+     * 一般開立折讓(紙本開立)-測試環境
      * @var string
      */
-    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
+    public const ALLOWANCE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/Allowance';
 
     /**
-     * 折讓-正式環境
+     * 一般開立折讓(紙本開立)-正式環境
      * @var string
      */
-    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
+    public const ALLOWANCE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/Allowance';
+
+    /**
+     * 線上開立折讓(通知開立)-測試環境
+     * @var string
+     */
+    public const ALLOWANCE_BY_COLLEGIATE_URL_TEST = 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
+
+    /**
+     * 線上開立折讓(通知開立)-正式環境
+     * @var string
+     */
+    public const ALLOWANCE_BY_COLLEGIATE_URL_PRODUCTION = 'https://einvoice.ecpay.com.tw/B2CInvoice/AllowanceByCollegiate';
 
     /**
      * 查詢折讓-測試環境
@@ -247,16 +259,16 @@ class Ecpay
     }
 
     /**
-     * 折讓發票
+     * 線上開立折讓(通知開立)
      *
-     * @param   AllowanceInfo  $info
+     * @param AllowanceInfo $info
      *
-     * @return array
+     * @return Response
      * @throws \JsonException
      */
-    public function allowance(AllowanceInfo $info)
+    public function allowanceByCollegiate(AllowanceInfo $info)
     {
-        $url = $this->isProduction ? self::ALLOWANCE_URL_PRODUCTION : self::ALLOWANCE_URL_TEST;
+        $url = $this->isProduction ? self::ALLOWANCE_BY_COLLEGIATE_URL_PRODUCTION : self::ALLOWANCE_BY_COLLEGIATE_URL_TEST;
 
         $payload = [
         ];
