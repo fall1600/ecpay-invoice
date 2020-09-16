@@ -311,11 +311,25 @@ class Ecpay
 
     /**
      * 驗證捐贈代號
-     * @param  string  $carrier
-     * @return array
+     *
+     * @param   string  $loveCode
+     *
+     * @return Response
+     * @throws \JsonException
      */
-    public function verifyLovecode(string $lovecode)
+    public function verifyLoveCode(string $loveCode)
     {
+        $url = $this->isProduction ? self::VERIFY_LOVECODE_URL_PRODUCTION : self::VERIFY_LOVECODE_URL_TEST;
+
+        $payload = [
+            'LoveCode' => $loveCode,
+        ];
+
+        $resp = $this->postData($url, $payload);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     public function setMerchant(Merchant $merchant)
