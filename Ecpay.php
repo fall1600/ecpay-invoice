@@ -270,10 +270,7 @@ class Ecpay
     {
         $url = $this->isProduction ? self::ALLOWANCE_BY_COLLEGIATE_URL_PRODUCTION : self::ALLOWANCE_BY_COLLEGIATE_URL_TEST;
 
-        $payload = [
-        ];
-
-        $resp = $this->postData($url, $payload);
+        $resp = $this->postData($url, $info->getInfo());
 
         $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
 
