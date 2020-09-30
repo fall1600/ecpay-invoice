@@ -281,10 +281,22 @@ class Ecpay
      * 查詢折讓明細
      * @param string $invoiceNumber
      * @param string $allowanceNumber
-     * @return array
+     * @return Response
+     * @throws \JsonException
+     * @throws \Exception
      */
     public function queryAllowance(string $invoiceNumber, string $allowanceNumber)
     {
+        $url = $this->isProduction ? self::QUERY_ALLOWANCE_URL_PRODUCTION : self::QUERY_ALLOWANCE_URL_TEST;
+
+        $resp = $this->postData($url, [
+            'InvoiceNo' => $invoiceNumber,
+            'AllowanceNo' => $allowanceNumber,
+        ]);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     public function invalidAllowance(string $invoiceNumber, string $allowanceNumber, string $reason = '')
