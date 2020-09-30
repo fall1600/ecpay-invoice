@@ -2,6 +2,7 @@
 
 namespace fall1600\Package\Ecpay\Invoice\Info\AllowanceDecorator;
 
+use fall1600\Package\Ecpay\Invoice\Constants\AllowanceNotifyType;
 use fall1600\Package\Ecpay\Invoice\Info\AllowanceInfo;
 
 class NotifyBySms extends AllowanceInfo
@@ -27,10 +28,10 @@ class NotifyBySms extends AllowanceInfo
     {
         $result = $this->info->getInfo();
 
-        if (isset($result['AllowanceNotify']) && $result['AllowanceNotify'] == \EcpayAllowanceNotifyType::Email) {
-            $result['AllowanceNotify'] = \EcpayAllowanceNotifyType::All;
+        if (isset($result['AllowanceNotify']) && $result['AllowanceNotify'] == AllowanceNotifyType::EMAIL) {
+            $result['AllowanceNotify'] = AllowanceNotifyType::ALL;
         } else {
-            $result['AllowanceNotify'] = \EcpayAllowanceNotifyType::Sms;
+            $result['AllowanceNotify'] = AllowanceNotifyType::SMS;
         }
 
         $result['NotifyPhone'] = $this->phone;
