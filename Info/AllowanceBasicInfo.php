@@ -15,6 +15,10 @@ class AllowanceBasicInfo extends AllowanceInfo
 
     public function getInfo()
     {
+        if (! $this->items) {
+            throw new \LogicException("error by not appending items to allowance yet");
+        }
+
         $result = [
             'InvoiceNo' => $this->invoiceNumber,
             'ReturnURL' => $this->returnUrl,
