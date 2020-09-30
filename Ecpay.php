@@ -258,6 +258,17 @@ class Ecpay
         return new Response($resp);
     }
 
+    public function allowance(AllowanceInfo $info)
+    {
+        $url = $this->isProduction ? self::ALLOWANCE_URL_PRODUCTION : self::ALLOWANCE_URL_TEST;
+
+        $resp = $this->postData($url, $info->getInfo());
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
+    }
+
     /**
      * 線上開立折讓(通知開立)
      *
@@ -270,7 +281,12 @@ class Ecpay
     {
         $url = $this->isProduction ? self::ALLOWANCE_BY_COLLEGIATE_URL_PRODUCTION : self::ALLOWANCE_BY_COLLEGIATE_URL_TEST;
 
-        $resp = $this->postData($url, $info->getInfo());
+        $payload = $info->getInfo();
+        if (! isset($payload['ReturnURL'])) {
+            throw new \LogicException("inject webhook url for AllowanceByCollegiate");
+        }
+
+        $resp = $this->postData($url, $payload);
 
         $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
 
