@@ -301,6 +301,17 @@ class Ecpay
 
     public function invalidAllowance(string $invoiceNumber, string $allowanceNumber, string $reason = '')
     {
+        $url = $this->isProduction ? self::INVALID_ALLOWANCE_URL_PRODUCTION : self::INVALID_ALLOWANCE_URL_TEST;
+
+        $resp = $this->postData($url, [
+            'InvoiceNo' => $invoiceNumber,
+            'AllowanceNo' => $allowanceNumber,
+            'Reason' => $reason,
+        ]);
+
+        $resp['DecryptedData'] = $this->merchant->decrypt($resp['Data']);
+
+        return new Response($resp);
     }
 
     public function queryInvalidAllowance(string $invoiceNumber, string $allowanceNumber)
